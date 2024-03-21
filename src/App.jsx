@@ -6,6 +6,7 @@ import Banner from "./components/Banner"
 import Gallery from "./components/Gallery"
 import photos from "./photos.json"
 import { useState } from "react"
+import ZoomModal from "./components/ZoomModal"
 
 const GradientBackground = styled.div`
     background: linear-gradient(174.61deg, #041833 4.16%, #04244F 48%, #154580 96.76%);
@@ -36,6 +37,7 @@ const GalleryContent = styled.section`
 const App = () => {
 
   const [galleryPhotos, setGalleryPhotos] = useState(photos)
+  const [selectedPhoto, setSelectedPhoto] = useState(null)
 
   return (
     <GradientBackground>
@@ -46,10 +48,14 @@ const App = () => {
           <SideBar />
           <GalleryContent>
             <Banner text={"The most complete space photo gallery!"} backgroundImage={"./images/banner.png"}/>
-            <Gallery photos={galleryPhotos}/>
+            <Gallery 
+              photos={galleryPhotos} 
+              whenSelectedPhoto={photo => setSelectedPhoto(photo)}
+            />
           </GalleryContent>          
         </MainContainer>
-      </AppContainer>      
+      </AppContainer>
+      <ZoomModal photo={selectedPhoto}/>      
     </GradientBackground>
   )
 }

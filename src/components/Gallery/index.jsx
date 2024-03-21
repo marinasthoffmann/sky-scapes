@@ -19,7 +19,7 @@ const ImagesContainer = styled.section`
     gap: 24px;
 `
 
-const Gallery = ( { photos = [] } ) => {
+const Gallery = ( { photos = [], whenSelectedPhoto } ) => {
     return (
         <>
             <Tags />            
@@ -29,8 +29,10 @@ const Gallery = ( { photos = [] } ) => {
                     <ImagesContainer>
                         {photos.map( photo => 
                             <Image 
+                                whenZoomed={whenSelectedPhoto}
                                 key={photo.id}
-                                photo={photo} />  
+                                photo={photo}
+                            />  
                         )}
                     </ImagesContainer>                    
                 </FluidSection>
