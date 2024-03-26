@@ -5,7 +5,7 @@ import SideBar from "./components/SideBar"
 import Banner from "./components/Banner"
 import Gallery from "./components/Gallery"
 import photos from "./photos.json"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ZoomModal from "./components/ZoomModal"
 import Footer from "./components/Footer"
 
@@ -39,6 +39,17 @@ const App = () => {
 
   const [galleryPhotos, setGalleryPhotos] = useState(photos)
   const [selectedPhoto, setSelectedPhoto] = useState(null)
+  const [filter, setFilter] = useState('')
+  const [tag, setTag] = useState(0)
+
+  useEffect(() => {
+    const filteredPhotos = photos.filter(photo => {
+      const filterByTag = !tag || photo.tagId === tag
+      const filterByTitle = !filter || photo.title.toLowerCase().includes(filter.toLowerCase())
+      return filterByTag && filterByTitle
+    })
+    setGalleryPhotos(filteredPhotos)
+  }, [filter, tag])
 
   const whenToggleFavorite = (photo) => {
     if (photo.id == selectedPhoto?.id) {
@@ -59,7 +70,7 @@ const App = () => {
     <GradientBackground>
       <GlobalStyles />
       <AppContainer>
-        <Header />
+        <Header filter={filter} setFilter={setFilter}/>
         <MainContainer>
           <SideBar />
           <GalleryContent>
@@ -68,6 +79,7 @@ const App = () => {
               photos={galleryPhotos} 
               whenSelectedPhoto={photo => setSelectedPhoto(photo)}
               whenToggleFavorite={whenToggleFavorite}
+              setTag={setTag}
             />
           </GalleryContent>          
         </MainContainer>
