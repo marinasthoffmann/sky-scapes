@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Image from "../Gallery/Image"
+import IconButton from "../IconButton"
 
 const Overlay = styled.div`
     background-color: rgba(0,0,0,0.7);
@@ -13,18 +14,33 @@ const Overlay = styled.div`
 const StyledDialog = styled.dialog`
     position: absolute;
     top: 294px;
+    background: transparent;
+    padding: 0;
+    border: 0;
+    width: 1156px;
+    display: flex;
+    justify-content: center;
+    form {
+        button {
+            position: relative;
+            top: 20px;
+            right: 60px;
+        }
+    }
 `
 
-const ZoomModal = ( { photo } ) => {
+const ZoomModal = ( { photo, whenClosed } ) => {
     return(
         <>
             {photo && 
             <>
                 <Overlay />
-                <StyledDialog open={!!photo}>
+                <StyledDialog open={!!photo} onClose={whenClosed}>
                     <Image photo={photo} expanded={true} />
                     <form method="dialog">
-                        <button>OK</button>
+                        <IconButton formMethod="dialog">
+                            <img src="/images/icons/close.png" alt="Close icon" />
+                        </IconButton>
                     </form>
                 </StyledDialog>
             </>}
