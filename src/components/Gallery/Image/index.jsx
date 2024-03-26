@@ -1,7 +1,9 @@
 import styled from "styled-components"
 import IconButton from "../../IconButton"
 
-const Image = ({ photo, expanded = false, whenZoomed }) => {
+const Image = ({ photo, expanded = false, whenZoomed, whenToggleFavorite }) => {
+
+    const favoriteIcon = photo.favorite ? '/images/icons/favorite-active.png' : '/images/icons/favorite.png'
     
     const Figure = styled.figure`
         width: 460px;
@@ -37,8 +39,8 @@ const Image = ({ photo, expanded = false, whenZoomed }) => {
                 <h3>{photo.title}</h3>
                 <Footer>
                     <p>{photo.source}</p>
-                    <IconButton>
-                        <img src="/images/icons/favorite.png" alt="Favorite icon" />
+                    <IconButton onClick={() => whenToggleFavorite(photo)}>
+                        <img src={favoriteIcon} alt="Favorite icon" />
                     </IconButton>
                     {!expanded && <IconButton aria-hidden={expanded} onClick={() => {whenZoomed(photo)}}>
                         <img src="/images/icons/expand.png" alt="Expand icon" />
